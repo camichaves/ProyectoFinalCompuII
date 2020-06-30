@@ -6,7 +6,8 @@ from scipy.io import loadmat
 import utils
 from oneVsAll import oneVsAll
 from predictOneVsAll import predictOneVsAll
-%matplotlib inline
+#%matplotlib inline
+#jdk-11.0.5
 
 # 20x20 Input Images
 input_layer_size  = 400
@@ -38,12 +39,14 @@ all_theta = oneVsAll(X, y, num_labels, lambda_)
 
 pred = predictOneVsAll(all_theta, X)
 print('Training Set Accuracy: {:.2f}%'.format(np.mean(pred == y) * 100))
-
+print('Thetas: ')
+print(np.matrix(all_theta))
+np.savetxt("thetas.txt",all_theta)
 indices = np.random.permutation(m)
 if indices.size > 0:
     i, indices = indices[0], indices[1:]
     utils.displayData(X[i, :], figsize=(4, 4))
     pred = predictOneVsAll(all_theta, X[i, :])
-    print('Prediccion: {}'.format(*pred))
+    print('Prediccion de prueba: {}'.format(*pred))
 else:
     print('No hay más imagenes por mostrar!')

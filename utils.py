@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot
 
 sys.path.append('..')
-from submission import SubmissionBase
+#from submission import SubmissionBase
 
 
 def displayData(X, example_width=None, figsize=(10, 10)):
@@ -35,7 +35,6 @@ def displayData(X, example_width=None, figsize=(10, 10)):
     for i, ax in enumerate(ax_array):
         ax.imshow(X[i].reshape(example_width, example_width, order='F'),
                   cmap='Greys', extent=[0, 1, 0, 1])
-        ax.show()
         ax.axis('off')
 
 
@@ -46,7 +45,7 @@ def sigmoid(z):
     return 1.0 / (1.0 + np.exp(-z))
 
 
-class Grader(SubmissionBase):
+class Grader():
     # Random Test Cases
     X = np.stack([np.ones(20),
                   np.exp(1) * np.sin(np.arange(1, 21)),

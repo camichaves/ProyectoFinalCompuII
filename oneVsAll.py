@@ -1,4 +1,4 @@
-from scipy.optimize import optimize
+from scipy import optimize
 from lrCostFunction import lrCostFunction
 import numpy as np
 

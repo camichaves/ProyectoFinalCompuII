@@ -24,11 +24,13 @@ def oneVsAll(X, y, num_labels, lambda_):
     X = np.concatenate([np.ones((m, 1)), X], axis=1)
     hijos = concurrent.futures.ProcessPoolExecutor()
     hn = []
-    for c in np.arange(num_labels):
-        hn.append(hijos.submit(calculateThetas(c, X, y, lambda_, n)))
 
-    for f in range(len(hn)):
-        all_theta[f] = hn[f].result
+    futures = {hijos.submit(calculateThetas(c, X, y, lambda_, n)): c
+               for c in np.arange(num_labels)
+               }
+
+    for f in concurrent.futures.as_completed(futures):
+        all_theta[futures[f]] = f.result
         #     initial_theta = np.zeros(n + 1)
         #     options = {'maxiter': 50}
         #     res = optimize.minimize(lrCostFunction,

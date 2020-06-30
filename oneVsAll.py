@@ -25,7 +25,7 @@ def oneVsAll(X, y, num_labels, lambda_):
     hijos = concurrent.futures.ProcessPoolExecutor()
     hn = []
 
-    futures = {hijos.submit(calculateThetas(c, X, y, lambda_, n)): c
+    futures = {hijos.submit(calculateThetas, c, X, y, lambda_, n): c
                for c in np.arange(num_labels)
                }
 

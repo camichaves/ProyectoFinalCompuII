@@ -35,6 +35,7 @@ def displayData(X, example_width=None, figsize=(10, 10)):
     for i, ax in enumerate(ax_array):
         ax.imshow(X[i].reshape(example_width, example_width, order='F'),
                   cmap='Greys', extent=[0, 1, 0, 1])
+        ax.show()
         ax.axis('off')
 
 

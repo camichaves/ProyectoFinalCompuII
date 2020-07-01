@@ -25,7 +25,7 @@ def conexion(skt_cli, direccion, port):
         #     except:
         #         result = "Operación no reconocida"
         print("[*] %s:%d Se conecto. " % (direccion, port))
-        result = b'recibido'
+        result = recibido
 
         # Respuesta al Cliente
         skt_cli.send(str(result).encode('utf-8'))

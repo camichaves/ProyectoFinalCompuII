@@ -4,32 +4,31 @@ import time
 
 
 def conexion(skt_cli, direccion, port):
-    while True:
-        # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
-        # la cantidad de bytes para recibir
-        recibido = skt_cli.recv(1024)
-        # result = 'No se ingreso comando valido'
-        # if recibido == b'close':
-        #     print("[*] %s:%d se desconectó. " % (direccion, port))
-        #     skt_cli.close()
-        #     break
-        # elif recibido == b'hora':
-        #     print("Hora " + time.strftime("%X"))
-        #     result = time.strftime("%X")
-        # elif recibido == b'op':
-        #     # Esperamos la operacion que reciba del cliente
-        #     recibido = skt_cli.recv(1024)
-        #     operation = recibido.decode('utf-8')
-        #     try:
-        #         result = eval(operation)
-        #     except:
-        #         result = "Operación no reconocida"
-        print("[*] %s:%d Se conecto. " % (direccion, port))
-        result = recibido
+    # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
+    # la cantidad de bytes para recibir
+    recibido = skt_cli.recv(1024)
+    # result = 'No se ingreso comando valido'
+    # if recibido == b'close':
+    #     print("[*] %s:%d se desconectó. " % (direccion, port))
+    #     skt_cli.close()
+    #     break
+    # elif recibido == b'hora':
+    #     print("Hora " + time.strftime("%X"))
+    #     result = time.strftime("%X")
+    # elif recibido == b'op':
+    #     # Esperamos la operacion que reciba del cliente
+    #     recibido = skt_cli.recv(1024)
+    #     operation = recibido.decode('utf-8')
+    #     try:
+    #         result = eval(operation)
+    #     except:
+    #         result = "Operación no reconocida"
+    print("[*] %s:%d Se conecto. " % (direccion, port))
+    result = recibido
 
-        # Respuesta al Cliente
-        skt_cli.send(str(result).encode('utf-8'))
-        skt_cli.close()
+    # Respuesta al Cliente
+    skt_cli.send(str(result).encode('utf-8'))
+    skt_cli.close()
 
 
 def servidor():

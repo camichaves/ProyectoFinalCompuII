@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5df8031-a480-4a3d-8fb9-3d92028ad04f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APP1/app1.py" beforeDir="false" afterPath="$PROJECT_DIR$/APP1/app1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/APP2/servidor.py" beforeDir="false" afterPath="$PROJECT_DIR$/APP2/servidor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/ex3data1.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/ex3weights.mat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +48,8 @@
       <workItem from="1593525098268" duration="1213000" />
       <workItem from="1593550208976" duration="2786000" />
       <workItem from="1593554767869" duration="1992000" />
-      <workItem from="1593646357617" duration="42000" />
+      <workItem from="1593646357617" duration="644000" />
+      <workItem from="1593785408854" duration="1407000" />
     </task>
     <servers />
   </component>
@@ -52,9 +57,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1593646358230">
+    <state x="465" y="238" key="com.intellij.ide.util.TipDialog" timestamp="1593785450276">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824/447.-768.1024.728@0.0.1536.824" timestamp="1593785450276" />
     <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824/894.-768.1024.728@0.0.1536.824" timestamp="1593525098347" />
     <state x="465" y="238" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1593646358230" />
   </component>

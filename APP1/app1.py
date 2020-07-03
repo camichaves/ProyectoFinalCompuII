@@ -10,7 +10,7 @@ from predictOneVsAll import predictOneVsAll
 #jdk-11.0.5
 
 # 20x20 Input Images
-input_layer_size  = 400
+input_layer_size = 400
 
 # 10 labels
 num_labels = 10

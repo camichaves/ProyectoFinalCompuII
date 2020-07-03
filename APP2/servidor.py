@@ -1,30 +1,32 @@
 import socket
 import threading
-import time
+
+puertoapp3 = 5556
+host = "127.0.0.1"
 
 
 def conexion(skt_cli, direccion, port):
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
     # la cantidad de bytes para recibir
     recibido = skt_cli.recv(1024)
-    # result = 'No se ingreso comando valido'
-    # if recibido == b'close':
-    #     print("[*] %s:%d se desconectó. " % (direccion, port))
-    #     skt_cli.close()
-    #     break
-    # elif recibido == b'hora':
-    #     print("Hora " + time.strftime("%X"))
-    #     result = time.strftime("%X")
-    # elif recibido == b'op':
-    #     # Esperamos la operacion que reciba del cliente
-    #     recibido = skt_cli.recv(1024)
-    #     operation = recibido.decode('utf-8')
-    #     try:
-    #         result = eval(operation)
-    #     except:
-    #         result = "Operación no reconocida"
     print("[*] %s:%d Se conecto. " % (direccion, port))
-    result = recibido
+    # Me convierto en cliente de la app3
+    skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    try:
+        # Realizamos la conexion
+        skt.connect((host, puertoapp3))
+        print("Se estableció conexión con el servidor")
+    except:
+        print("No se ha podido establecer la conexion con el servidor")
+        return
+    skt.send(recibido)
+
+    # Recibimos la respuesta del servidor en data
+    data = skt.recv(1024)
+    print(" >Respuesta de App3:", data.decode('utf-8'))
+    skt.close()
+    result = data.decode('utf-8')
 
     # Respuesta al Cliente
     skt_cli.send(str(result).encode('utf-8'))
@@ -32,7 +34,6 @@ def conexion(skt_cli, direccion, port):
 
 
 def servidor():
-    host = "127.0.0.1"
     puerto = 5555
 
     max_conexiones = 5

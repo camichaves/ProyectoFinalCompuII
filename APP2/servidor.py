@@ -24,12 +24,12 @@ def conexion(skt_cli, direccion, port):
 
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
-    print(" >Respuesta de App3:", data.decode('utf-8'))
+    print(" >Respuesta de App3:", data)
     skt.close()
-    result = data.decode('utf-8')
+    result = data
 
     # Respuesta al Cliente
-    skt_cli.send(str(result).encode('utf-8'))
+    skt_cli.send(str(result))
     skt_cli.close()
 
 

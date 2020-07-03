@@ -24,7 +24,8 @@ def cliente():
     # mens = input("Ingrese comando a enviar> ")
     # Enviamos el comando al servidor
     mens = cv2.imread('cuatro.jpg', cv2.IMREAD_GRAYSCALE)  # grayscale
-    skt.send(mens.encode('utf-8'))
+    print(str(mens))
+    skt.send(mens)
     # if mens == "op":
     #     op = input("Ingrese operación (Ej: 2+2, 3*5, etc)> ")
     #     # Le enviamos la operacion  (Podria esperar una respuesta del servidor pero lo hice asi para simplificar)
@@ -32,7 +33,7 @@ def cliente():
 
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
-    print(" >Respuesta Server:", str(data.decode('utf-8')))
+    print(" >Respuesta Server:", str(data))
     skt.close()
     print("Conexión cerrada")
 

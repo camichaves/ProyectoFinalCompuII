@@ -16,7 +16,7 @@ def cliente():
         return
 
     print("--------------------Funciones--------------------")
-    print("    Ingresa un texto y te lo devuelvo igual we   ")
+    print("    Envìa una img en escala de grises            ")
     print("    Escribe close para cerrar xd                 ")
     print("-------------------------------------------------")
 
@@ -30,7 +30,7 @@ def cliente():
 
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
-    print(" >Respuesta Server:", data.decode('utf-8'))
+    print(" >Respuesta Server:", str(data.decode('utf-8')))
     skt.close()
     print("Conexión cerrada")
 

@@ -18,6 +18,7 @@ num_labels = 10
 #  training data stored in arrays X, y
 data = loadmat(os.path.join('Data', 'ex3data1.mat'))
 X, y = data['X'], data['y'].ravel()
+print(X[1,:])
 
 y[y == 10] = 0
 m = y.size

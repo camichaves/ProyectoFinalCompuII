@@ -21,7 +21,7 @@ def conexion(skt_cli, direccion, port, all_theta):
 def servidor():
     host = "127.0.0.1"
     puerto = 5556
-    all_theta = np.loadtxt("thetas.txt", comments="#", delimiter=",", unpack=False)
+    all_theta = np.loadtxt("thetas.txt", comments="#", delimiter=" ", unpack=False)
     print(all_theta)
 
     max_conexiones = 5

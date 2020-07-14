@@ -8,7 +8,7 @@ host = "127.0.0.1"
 def conexion(skt_cli, direccion, port):
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
     # la cantidad de bytes para recibir
-    recibido = skt_cli.recv(1024)
+    recibido = skt_cli.recv(4660)
     print("[*] %s:%d Se conecto. " % (direccion, port))
     # Me convierto en cliente de la app3
     skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -20,11 +20,11 @@ def conexion(skt_cli, direccion, port):
     except:
         print("No se ha podido establecer la conexion con el servidor")
         return
+    print(str(recibido))
     skt.send(recibido)
-
     # Recibimos la respuesta del servidor en data
-    data = skt.recv(1024)
-    print(" >Respuesta de App3:", str(data))
+    data = skt.recv(4660)
+    print(" >Respuesta de App3:", str(data.decode('utf-8')))
     skt.close()
     result = data
 

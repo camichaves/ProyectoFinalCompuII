@@ -7,11 +7,13 @@ from predictOneVsAll import predictOneVsAll
 def conexion(skt_cli, direccion, port, all_theta):
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
     # la cantidad de bytes para recibir
-    recibido = skt_cli.recv(1024)
+    recibido = skt_cli.recv(4660)
     print("[*] %s:%d Se conecto. " % (direccion, port))
-    print(str(recibido))
+    #print(str(recibido))
+    #print(str(recibido.decode('utf-8').replace('[[','[').replace(']]',']')))
+    print(np.asarray(recibido.decode('utf-8').replace('[[','[').replace(']]',']')))
     # Me convierto en cliente de la app3
-    pred = predictOneVsAll(all_theta, np.asarray(recibido))
+    pred = predictOneVsAll(all_theta, np.asarray(recibido.decode('utf-8')))
     print('Prediccion: {}'.format(*pred))
     result = pred
     # Respuesta al Cliente

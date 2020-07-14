@@ -24,7 +24,7 @@ def conexion(skt_cli, direccion, port):
 
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
-    print(" >Respuesta de App3:", data)
+    print(" >Respuesta de App3:", str(data))
     skt.close()
     result = data
 

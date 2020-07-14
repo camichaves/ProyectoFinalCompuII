@@ -11,7 +11,7 @@ def conexion(skt_cli, direccion, port, all_theta):
     print("[*] %s:%d Se conecto. " % (direccion, port))
     print(str(recibido))
     # Me convierto en cliente de la app3
-    pred = predictOneVsAll(all_theta, recibido.decode('utf-8'))
+    pred = predictOneVsAll(all_theta, np.asarray(recibido))
     print('Prediccion: {}'.format(*pred))
     result = pred
     # Respuesta al Cliente

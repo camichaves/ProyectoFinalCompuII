@@ -1,5 +1,7 @@
 import socket
-import cv2
+import imageio
+import numpy as np
+from matplotlib import pyplot as plt
 
 
 def cliente():
@@ -17,15 +19,20 @@ def cliente():
         return
 
     # print("--------------------Funciones--------------------")
-    # print("    Envìa una img en escala de grises            ")
+    # print("    Envìa una img para predecir                  ")
     # print("    Escribe close para cerrar xd                 ")
     # print("-------------------------------------------------")
     #
     # mens = input("Ingrese comando a enviar> ")
     # Enviamos el comando al servidor
-    mens = cv2.imread('cuatro.jpg', cv2.IMREAD_GRAYSCALE)  # grayscale
+    im = imageio.imread(
+        "C:\\Users\Camila\Documents\FACULTAD\FINAL COMPU II\Andrew-NG-ML-Python-Solutions\Exercise3\laimg.png")
+    gray = np.dot(im[..., :3], [0.2989, 0.5870, 0.114])
+    # gray = np.dot(im[...,:3],[65536, 256, 1])
+    gray /= 255
+    mens = gray
     print(str(mens))
-    skt.send(mens)
+    skt.send(mens.tostring())
     # if mens == "op":
     #     op = input("Ingrese operación (Ej: 2+2, 3*5, etc)> ")
     #     # Le enviamos la operacion  (Podria esperar una respuesta del servidor pero lo hice asi para simplificar)

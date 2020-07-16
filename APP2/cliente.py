@@ -1,6 +1,8 @@
 import socket
 import imageio
 import numpy as np
+import re
+from ast import literal_eval
 from matplotlib import pyplot as plt
 
 
@@ -31,7 +33,14 @@ def cliente():
     # gray = np.dot(im[...,:3],[65536, 256, 1])
     gray /= 255
     mens = gray
-    print(str(mens))
+    test = str(mens)
+    mat = re.sub("\s+",",",test)
+    #print(mat)
+    arr = literal_eval(mat)
+    testArray = np.asarray(arr)
+    #print(testArray)
+    gg = testArray[0]
+    #print(gg)
     skt.send(str(mens).encode('utf-8'))
     # if mens == "op":
     #     op = input("Ingrese operación (Ej: 2+2, 3*5, etc)> ")
@@ -40,7 +49,7 @@ def cliente():
 
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
-    print(" >Respuesta Server:", str(data))
+    print(" >Respuesta Server:", str(data.decode('utf-8')))
     skt.close()
     print("Conexión cerrada")
 

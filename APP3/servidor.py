@@ -1,6 +1,8 @@
 import socket
 import threading
 import numpy as np
+import re
+from ast import literal_eval
 from predictOneVsAll import predictOneVsAll
 
 
@@ -11,13 +13,15 @@ def conexion(skt_cli, direccion, port, all_theta):
     print("[*] %s:%d Se conecto. " % (direccion, port))
     #print(str(recibido))
     #print(str(recibido.decode('utf-8').replace('[[','[').replace(']]',']')))
-    print(np.asarray(recibido.decode('utf-8').replace('[[','[').replace(']]',']')))
+    mat = re.sub("\s+",",",recibido.decode('utf-8'))
+    arr = literal_eval(mat)
     # Me convierto en cliente de la app3
-    pred = predictOneVsAll(all_theta, np.asarray(recibido.decode('utf-8')))
+    print(np.asarray(arr))
+    pred = predictOneVsAll(all_theta, np.asarray(arr).ravel())
     print('Prediccion: {}'.format(*pred))
     result = pred
     # Respuesta al Cliente
-    skt_cli.send(str(result))
+    skt_cli.send(str(result).encode('utf-8'))
     skt_cli.close()
 
 

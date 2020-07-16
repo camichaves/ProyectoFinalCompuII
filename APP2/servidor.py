@@ -29,7 +29,7 @@ def conexion(skt_cli, direccion, port):
     result = data
 
     # Respuesta al Cliente
-    skt_cli.send(str(result))
+    skt_cli.send(result)
     skt_cli.close()
 
 

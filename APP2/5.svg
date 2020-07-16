@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with matplotlib (https://matplotlib.org/) -->
+<svg height="1440pt" version="1.1" viewBox="0 0 1440 1440" width="1440pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+*{stroke-linecap:butt;stroke-linejoin:round;}
+  </style>
+ </defs>
+ <g id="figure_1">
+  <g id="axes_1">
+   <image height="1440" id="image9646b591f9" transform="scale(1 -1)translate(0 -1440)" width="1440" x="0" xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABHNCSVQICAgIfAhkiAAAAvlJREFUOI2tlG9olVUcxz+/8zzb3f3v3W1OTXPTTejin4EYuKg3hqg5UCEIQwoM/+BfInrRi3yjLxySSbcIgogSGr2p9EUUVlIqaJaVDcb0Km3qNlvLO+y5u3vOc04v7pze7U5M+r46nPP7fs6X8zv8ZNXMHZb/UephTFZrbGAeDGitxfo+1vcng6zFJuMUljYikZqKUDXRQCJGcUkjfmZuae9ek9bodJTk6730Z8OMLHlsErQ8YbFI38oZrDzyPa3Zc/RunI/Eo2Um0YaXZp3mRMuHDCwLgdaVgTYwUJemZdNFdqU62ZY6yxd72unePw2SsTLorSCCEmH2Mz3gqMpATEDPhhlsr/+WQTMKQI3AW0900LV7+li1g3szz+GuFSRVGEeZygltYJB4DLX8bzJVAW8PPsWa9tc4MLCC1tAQHW1Zrr/QDFpjb+Xxf0zRp2/zeKKfYEH5O6o76fxZKbKLP2HEBhy7tIjp2TP8cHQpF/0ImaqA5Oo+jOeBKOp+0xz/ZwFv1J+me1sIqa4qNXQcKILj+Xw9vIgqUShlUZEIsz+9wpbzmwhLNS3pa5BpwhaLiLF4ppoacQknRkCpCQkdB/XXMJ/lFhOTEMZIqVG+T0O7pa17LTvrTnLpxTgSjRL+rpP3u55kxGqea76ASScgCO4CRQRbKBD8nuR64PF0Qw6bmVcquNxL/t059OoEx9YdJrenCVWbYlq0gGcCXkmfZ7Q2DGPvWNbzeR1/su/Gag49eoKr6+OlolCI5Mkr7PxoK/WO4YON75B7s5bn5/xERDlsvtpGqG8YXLccKK4L/YOc+WYhvjUwNjJEBKyhseMmrR+/SlR8Ti1/j7WxTjwT8POF+TCUByWTE+IoZp7SLPtyL4/8asY/rbguDOVpOpJj/Ve7uOzX4Ag8+8tmGj/XoHXpYkCmHF8iYMuPrLVgLH+83Iw3V5M5OID1CuMwALcirOSucIdgFTQc7YGxqXQv7P7AKSQi2NHR8fVE/WfgVKA7eqiJfT/9C441OZhF32yBAAAAAElFTkSuQmCC" y="-0"/>
+  </g>
+ </g>
+</svg>

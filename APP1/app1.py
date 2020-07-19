@@ -6,6 +6,10 @@ from scipy.io import loadmat
 import utils
 from oneVsAll import oneVsAll
 from predictOneVsAll import predictOneVsAll
+import mmap
+import sys
+sys.path.insert(1,"/home/camila/Documentos/Proyecto/ProyectoFinalCompuII/Global")
+from glob import generarmem
 #%matplotlib inline
 #jdk-11.0.5
 
@@ -43,6 +47,9 @@ print('Training Set Accuracy: {:.2f}%'.format(np.mean(pred == y) * 100))
 print('Thetas: ')
 print(np.matrix(all_theta))
 np.savetxt("thetas.txt",all_theta)
+generarmem()
+glob.cargarmem(all_thetas)
+print(glob.leermem())
 indices = np.random.permutation(m)
 if indices.size > 0:
     i, indices = indices[0], indices[1:]

@@ -27,8 +27,7 @@ def cliente():
     #
     # mens = input("Ingrese comando a enviar> ")
     # Enviamos el comando al servidor
-    im = imageio.imread("/home/camila/Documentos/Proyecto/ProyectoFinalCompuII/APP2/laimg.png")
-        #"C:\\Users\Camila\Documents\FACULTAD\FINAL COMPU II\Andrew-NG-ML-Python-Solutions\Exercise3\laimg.png")
+    im = imageio.imread("/home/camila/Documentos/Proyecto/ProyectoFinalCompuII/APP2/9.png")
     gray = np.dot(im[..., :3], [0.2989, 0.5870, 0.114])
     # gray = np.dot(im[...,:3],[65536, 256, 1])
     gray /= 255

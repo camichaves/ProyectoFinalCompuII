@@ -4,7 +4,9 @@ import numpy as np
 import re
 from ast import literal_eval
 from predictOneVsAll import predictOneVsAll
-
+import sys
+sys.path.insert(1,"/home/camila/Documentos/Proyecto/ProyectoFinalCompuII/Global")
+import Global
 
 def conexion(skt_cli, direccion, port, all_theta):
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
@@ -29,7 +31,7 @@ def servidor():
     host = "127.0.0.1"
     puerto = 5556
     all_theta = np.loadtxt("thetas.txt", comments="#", delimiter=" ", unpack=False)
-    print(all_theta)
+    print(Global.test)
 
     max_conexiones = 5
     # Creamos el socket con la familia AF_INET y el tipo SOCK_STREAM

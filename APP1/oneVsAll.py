@@ -23,7 +23,6 @@ def oneVsAll(X, y, num_labels, lambda_):
 
     X = np.concatenate([np.ones((m, 1)), X], axis=1)
     hijos = concurrent.futures.ProcessPoolExecutor()
-    hn = []
 
     futures = {hijos.submit(calculateThetas, c, X, y, lambda_, n): c
                for c in np.arange(num_labels)

@@ -20,7 +20,6 @@ def conexion(skt_cli, direccion, port):
     except:
         print("No se ha podido establecer la conexion con el servidor")
         return
-    print(str(recibido))
     skt.send(recibido)
     # Recibimos la respuesta del servidor en data
     data = skt.recv(4660)

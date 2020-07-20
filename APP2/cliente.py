@@ -1,14 +1,20 @@
 import socket
 import imageio
+import getopt
 import numpy as np
 import re
 from ast import literal_eval
 from matplotlib import pyplot as plt
+import sys
 
 
 def cliente():
     host = "127.0.0.1"
     puerto = 5555
+    opc ,argus = getopt.getopt(sys.argv[1:],'a:')
+    rutaarch = ""
+    for o, a in opc:
+        rutaarch = "/home/guille/Escritorio/TrabajoCompuII/ProyectoFinalCompuII/APP2/" + a
     # Creamos el socket para conectarnos
     skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -19,17 +25,11 @@ def cliente():
     except:
         print("No se ha podido establecer la conexion con el servidor")
         return
-
-    # print("--------------------Funciones--------------------")
-    # print("    Envìa una img para predecir                  ")
-    # print("    Escribe close para cerrar xd                 ")
-    # print("-------------------------------------------------")
-    #
-    # mens = input("Ingrese comando a enviar> ")
     # Enviamos el comando al servidor
-    im = imageio.imread("/home/camila/Documentos/Proyecto/ProyectoFinalCompuII/APP2/9.png")
+    im = imageio.imread(rutaarch)
     gray = np.dot(im[..., :3], [0.2989, 0.5870, 0.114])
     # gray = np.dot(im[...,:3],[65536, 256, 1])
+    gray = np.transpose(gray)
     gray /= 255
     mens = gray
     test = str(mens)
@@ -41,11 +41,6 @@ def cliente():
     gg = testArray[0]
     #print(gg)
     skt.send(str(mens).encode('utf-8'))
-    # if mens == "op":
-    #     op = input("Ingrese operación (Ej: 2+2, 3*5, etc)> ")
-    #     # Le enviamos la operacion  (Podria esperar una respuesta del servidor pero lo hice asi para simplificar)
-    #     skt.send(op.encode('utf-8'))
-
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)
     print(" >Respuesta Server:", str(data.decode('utf-8')))

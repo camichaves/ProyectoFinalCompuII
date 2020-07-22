@@ -28,18 +28,9 @@ def cliente():
     # Enviamos el comando al servidor
     im = imageio.imread(rutaarch)
     gray = np.dot(im[..., :3], [0.2989, 0.5870, 0.114])
-    # gray = np.dot(im[...,:3],[65536, 256, 1])
     gray = np.transpose(gray)
     gray /= 255
     mens = gray
-    test = str(mens)
-    mat = re.sub("\s+",",",test)
-    #print(mat)
-    arr = literal_eval(mat)
-    testArray = np.asarray(arr)
-    #print(testArray)
-    gg = testArray[0]
-    #print(gg)
     skt.send(str(mens).encode('utf-8'))
     # Recibimos la respuesta del servidor en data
     data = skt.recv(1024)

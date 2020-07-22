@@ -20,17 +20,12 @@ data = loadmat(os.path.join('Data', 'ex3data1.mat'))
 X, y = data['X'], data['y'].ravel()
 y[y == 10] = 0
 m = y.size
-
-# Randomly select 100 data points to display
 theta_t = np.array([-2, -1, 1, 2], dtype=float)
 X_t = np.concatenate([np.ones((5, 1)), np.arange(1, 16).reshape(5, 3, order='F')/10.0], axis=1)
 y_t = np.array([1, 0, 1, 0, 1])
 lambda_t = 3
-
-
 lambda_ = 0.1
 all_theta = oneVsAll(X, y, num_labels, lambda_)
-
 pred = predictOneVsAll(all_theta, X)
 print('Training Set Accuracy: {:.2f}%'.format(np.mean(pred == y) * 100))
 np.savetxt("thetas.txt",all_theta)

@@ -3,7 +3,6 @@ import numpy as np
 from matplotlib import pyplot
 
 sys.path.append('..')
-#from submission import SubmissionBase
 
 
 def displayData(X, example_width=None, figsize=(10, 10)):
@@ -27,7 +26,8 @@ def displayData(X, example_width=None, figsize=(10, 10)):
     display_rows = int(np.floor(np.sqrt(m)))
     display_cols = int(np.ceil(m / display_rows))
 
-    fig, ax_array = pyplot.subplots(display_rows, display_cols, figsize=figsize)
+    fig, ax_array = pyplot.subplots(
+        display_rows, display_cols, figsize=figsize)
     fig.subplots_adjust(wspace=0.025, hspace=0.025)
 
     ax_array = [ax_array] if m == 1 else ax_array.ravel()
@@ -80,14 +80,16 @@ class Grader():
                       'One-vs-All Classifier Prediction',
                       'Neural Network Prediction Function']
 
-        super().__init__('multi-class-classification-and-neural-networks', part_names)
+        super().__init__('multi-class-classification-and-neural-networks',
+                         part_names)
 
     def __iter__(self):
         for part_id in range(1, 5):
             try:
                 func = self.functions[part_id]
                 if part_id == 1:
-                    res = func(np.array([0.25, 0.5, -0.5]), self.X, self.y, 0.1)
+                    res = func(
+                        np.array([0.25, 0.5, -0.5]), self.X, self.y, 0.1)
                     res = np.hstack(res).tolist()
                 elif part_id == 2:
                     res = func(self.Xm, self.ym, 4, 0.1)
@@ -100,3 +102,4 @@ class Grader():
                 yield part_id, res
             except KeyError:
                 yield part_id, 0
+

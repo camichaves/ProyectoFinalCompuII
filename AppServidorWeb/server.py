@@ -10,21 +10,26 @@ host = config.readline()[:-1]
 mipuerto = config.readline()[:-1]
 config.readline()
 puertoapp3 = int(config.readline()[:-1])
+hostapp3 = config.readline()[:-1]
+ipvnro = int(config.readline()[:-1])
 config.close()
-server3 = "127.0.0.1"
 
 
-def conexion(host, puertoapp3, recibido, direccion):
+def conexion(host, puertoapp3, recibido, direccion, app3):
     # Me convierto en cliente de la app3
-    skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    skt = None
+    if(ipvnro == 6):
+        skt = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    else:
+        skt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    #try:
+    try:
         # Realizamos la conexion
-    skt.connect(('127.0.0.1',puertoapp3))
-    print("Se estableció conexión con el servidor")
-    #except:
-    print("No se ha podido establecer la conexion con el servidor")
-        #return
+        skt.connect((app3,puertoapp3))
+        print("Se estableció conexión con el servidor")
+    except:
+        print("No se ha podido establecer la conexion con el servidor")
+        return
     pet = direccion + "-" + str(recibido)
     skt.send(pet.encode('utf-8'))
     # Recibimos la respuesta del servidor en data
@@ -45,7 +50,7 @@ def conexion(host, puertoapp3, recibido, direccion):
 def home():
     rta = conexion(
         host, puertoapp3, flask.request.form['img'],
-        flask.request.remote_addr)
+        flask.request.remote_addr, hostapp3)
     return rta
 
 if __name__ == "__main__":

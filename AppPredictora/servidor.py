@@ -10,6 +10,7 @@ from datetime import datetime
 import getopt
 import sys
 import os
+from filelock import FileLock
 
 
 def conexion(skt_cli, direccion, port, all_theta, guardar):
@@ -32,10 +33,14 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
     if(guardar):
         print("guardando data...")
         linea = str(datetime.now()) + ", " + str(_COUNTER.value) + ", " + str(recibido[0]) + ", " + str(pred) + "\n"
-        h = open("historial.txt", "a+")
-        h.write(linea)
-        h.close()
-        print("Listo")
+        try:
+            lock = FileLock("archivo.lock")
+            with lock:
+                    print("Lock acquired.")
+                    open("historial.log", "a+").write(linea)
+                    print("Listo")
+        except:
+            print("Ocurriò un problema al guardar la info en el archivo")
     # Respuesta al Cliente
     try:
         skt_cli.send(str(result).encode('utf-8'))
@@ -47,8 +52,7 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
 
 def servidor():
     config = open("servidor.conf", "r")
-    host = '127.0.0.1'
-    config.readline()
+    host = config.readline()[:-1]
     puerto = int(config.readline()[:-1])
     rutaThetas = config.readline()[:-1]
     s = None
@@ -64,8 +68,7 @@ def servidor():
         comments="#", delimiter=" ", unpack=False)
     max_conexiones = 5
     # Creamos el socket con la familia AF_INET y el tipo SOCK_STREAM
-    #skt_ser = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-    for res in socket.getaddrinfo(None, puerto):
+    for res in socket.getaddrinfo(host, puerto):
         af, socktype, proto, canonname, sa = res
         try:
             s = socket.socket(af, socktype, proto)
@@ -82,6 +85,7 @@ def servidor():
             s.close()
             s = None
             continue
+        break
     if s is None:
         print ('could not open socket')
         sys.exit(1)
@@ -99,14 +103,6 @@ def servidor():
     except KeyboardInterrupt:
         print("\n Servidor cerrado. Chauu.")
         s.close()
-        
-    # Bindeamos la direccion y puerto
-    #skt_ser.bind((host, puerto))
-
-    # Lo abrimos para que quede a la escucha de clientes
-    #skt_ser.listen(max_conexiones)
-    #print("[*] Esperando conexiones en %s:%d" % (host, puerto))
-    #hijos = concurrent.futures.ProcessPoolExecutor()
 if __name__ == "__main__":
     servidor()
 

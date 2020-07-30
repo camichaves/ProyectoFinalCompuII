@@ -11,6 +11,7 @@ import getopt
 import sys
 import os
 from filelock import FileLock
+from configparser import ConfigParser
 
 
 def conexion(skt_cli, direccion, port, all_theta, guardar):
@@ -20,15 +21,23 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
         print(_COUNTER.value)
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
     # la cantidad de bytes para recibir
-    recib = skt_cli.recv(4660)
+    recib = skt_cli.recv(12152)
     recib = recib.decode('utf-8')
     recibido = recib.split("-", 1)
     print("[*] %s:%d Se conecto. " % (direccion, port))
-    mat = re.sub("\s+", ",", recibido[1])
-    arr = literal_eval(mat)
-    # Me convierto en cliente de la app3
-    pred = predictOneVsAll(all_theta, np.asarray(arr).ravel())
+    try:
+        mat = re.sub("\s+", ",", recibido[1])
+        mat = mat.replace('[,', '[')
+        matriz = eval(mat)
+        matriz = np.asarray(matriz)
+        gray = np.dot(matriz[..., :3], [0.2989, 0.5870, 0.114])
+        gray = np.transpose(gray)
+        gray /= 255
+    except:
+        print("No se hizo el array")
+    pred = predictOneVsAll(all_theta, gray.ravel())
     print('Prediccion: {}'.format(*pred))
+    print("Prediccion lista")
     result = pred
     if(guardar):
         print("guardando data...")
@@ -51,12 +60,16 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
 
 
 def servidor():
-    config = open("servidor.conf", "r")
-    host = config.readline()[:-1]
-    puerto = int(config.readline()[:-1])
-    rutaThetas = config.readline()[:-1]
+    try:
+        parser = ConfigParser()
+        parser.read('serv.conf')
+        puerto = int(parser.get('SOCKET_CONF', 'puerto'))
+        ipvnro = int(parser.get('SOCKET_CONF', 'ipv'))
+        rutaThetas = parser.get('FUNCION_PREDICTORA', 'thetas')
+    except:
+        print("Ocurriò un problema al leer el archivo de configuracion :(")
+        return
     s = None
-    config.close()
     opc, argus = getopt.getopt(sys.argv[1:], 'v')
     guardarDatos = False
     for o, a in opc:
@@ -66,9 +79,13 @@ def servidor():
     all_theta = np.loadtxt(
         os.path.join(rutaThetas, "thetas.txt"),
         comments="#", delimiter=" ", unpack=False)
-    max_conexiones = 5
     # Creamos el socket con la familia AF_INET y el tipo SOCK_STREAM
-    for res in socket.getaddrinfo(host, puerto):
+    socketFamily=''
+    if(ipvnro == 6):
+        socketFamily=socket.AF_INET6
+    else:
+        socketFamily=socket.AF_INET
+    for res in socket.getaddrinfo(None, puerto, socketFamily):
         af, socktype, proto, canonname, sa = res
         try:
             s = socket.socket(af, socktype, proto)
@@ -81,7 +98,6 @@ def servidor():
             s.listen(1)
             hijos = concurrent.futures.ProcessPoolExecutor()
         except socket.error:
-           
             s.close()
             s = None
             continue
@@ -103,6 +119,8 @@ def servidor():
     except KeyboardInterrupt:
         print("\n Servidor cerrado. Chauu.")
         s.close()
+        
+        
 if __name__ == "__main__":
     servidor()
 

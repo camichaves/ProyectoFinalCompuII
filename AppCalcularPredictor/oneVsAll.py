@@ -6,7 +6,7 @@ import concurrent.futures
 
 def calculateThetas(c, X, y, lambda_, n):
     initial_theta = np.zeros(n + 1)
-    options = {'maxiter': 50}
+    options = {'maxiter': 100}
     res = optimize.minimize(lrCostFunction,
                             initial_theta,
                             (X, (y == c), lambda_),

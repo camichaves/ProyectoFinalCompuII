@@ -8,9 +8,10 @@ import sys
 from configparser import ConfigParser
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+ALLOWED_EXTENSIONS = {'png'}
 
 
-def conexion(puertoapp3, recibido, direccion, app3):
+def conexion(recibido, direccion):
     # Me convierto en cliente de la app3
     skt = None
     if(ipvnro == 6):
@@ -20,7 +21,7 @@ def conexion(puertoapp3, recibido, direccion, app3):
 
     try:
         # Realizamos la conexion
-        skt.connect((app3, puertoapp3))
+        skt.connect((hostSocket, puertoSocket))
         print("Se estableció conexión con el servidor")
     except:
         print("No se ha podido establecer la conexion con el servidor")
@@ -45,14 +46,26 @@ def conexion(puertoapp3, recibido, direccion, app3):
         print("Problemas al enviar la respuesta :(")
 
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @app.route('/', methods=["GET", 'POST'])
 def home():
     if request.method == 'POST':
-        im = imageio.imread(request.files['img'])
-        rta = conexion(
-            puertoSocket, str(im) ,
-            flask.request.remote_addr, hostSocket)
-        return rta
+        if 'img' not in request.files:
+            return('NO enviaste ningun archivo')
+        if request.files['img'].filename == '':
+            return('No selected file')
+        if request.files['img'] and allowed_file(request.files['img'].filename):
+            im = imageio.imread(request.files['img'])
+            rta = conexion(
+                str(im) ,
+                flask.request.remote_addr)
+            return rta
+        else:
+            return('La imagen no es .png')
     return render_template("form.html")
 
 

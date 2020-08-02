@@ -70,7 +70,7 @@ def servidor():
         print("Ocurriò un problema al leer el archivo de configuracion :(")
         return
     s = None
-    opc, argus = getopt.getopt(sys.argv[1:], 'v')
+    opc, argus = getopt.getopt(sys.argv[1:], 's')
     guardarDatos = False
     for o, a in opc:
         guardarDatos = True

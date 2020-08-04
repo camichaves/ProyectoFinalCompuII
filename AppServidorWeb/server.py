@@ -26,14 +26,15 @@ def conexion(recibido, direccion):
     except:
         print("No se ha podido establecer la conexion con el servidor")
         return
-    pet = direccion + "-" + str(recibido)
+    pet = str(recibido)
+    print(recibido)
     try:
         skt.send(pet.encode('utf-8'))
     except:
         print("No se ha podido enviar la respuesta del servidor :(")
         return
     # Recibimos la respuesta del servidor en data
-    data = skt.recv(12152)
+    data = skt.recv(100)
     print(" >Respuesta de App3:", str(data.decode('utf-8')))
     skt.close()
     result = data
@@ -54,18 +55,16 @@ def allowed_file(filename):
 @app.route('/', methods=["GET", 'POST'])
 def home():
     if request.method == 'POST':
-        if 'img' not in request.files:
-            return('NO enviaste ningun archivo')
-        if request.files['img'].filename == '':
-            return('No selected file')
-        if request.files['img'] and allowed_file(request.files['img'].filename):
-            im = imageio.imread(request.files['img'])
-            rta = conexion(
-                str(im) ,
+        matrices = ""
+        for img in request.files.getlist("img"):
+            im = imageio.imread(img)
+            matrices = matrices + str(im) + "--"
+        print(matrices)
+        rta = conexion(
+                matrices ,
                 flask.request.remote_addr)
-            return rta
-        else:
-            return('La imagen no es .png')
+        return rta
+        
     return render_template("form.html")
 
 

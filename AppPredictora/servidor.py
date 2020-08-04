@@ -12,19 +12,15 @@ from filelock import FileLock
 from configparser import ConfigParser
 
 
-def conexion(skt_cli, direccion, port, all_theta, guardar):
+def conexion(all_theta, guardar, recibido):
     with _COUNTER.get_lock():
         _COUNTER.value += 1
         print("Cantidad de numeros calculados:")
         print(_COUNTER.value)
     # Recibimos el mensaje, con el metodo recv recibimos datos y como parametro
     # la cantidad de bytes para recibir
-    recib = skt_cli.recv(12152)
-    recib = recib.decode('utf-8')
-    recibido = recib.split("-", 1)
-    print("[*] %s:%d Se conecto. " % (direccion, port))
     try:
-        mat = re.sub("\s+", ",", recibido[1])
+        mat = re.sub("\s+", ",", recibido)
         mat = mat.replace('[,', '[')
         matriz = eval(mat)
         matriz = np.asarray(matriz)
@@ -33,13 +29,14 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
         gray /= 255
     except:
         print("No se hizo el array")
+        return -1
     pred = predictOneVsAll(all_theta, gray.ravel())
     print('Prediccion: {}'.format(*pred))
     print("Prediccion lista")
     result = pred
     if(guardar):
         print("guardando data...")
-        linea = str(datetime.now()) + ", " + str(_COUNTER.value) + ", " + str(recibido[0]) + ", " + str(pred) + "\n"
+        linea = str(datetime.now()) + ", " + str(_COUNTER.value) + ", " + str(pred) + "\n"
         try:
             lock = FileLock("archivo.lock")
             with lock:
@@ -49,12 +46,9 @@ def conexion(skt_cli, direccion, port, all_theta, guardar):
         except:
             print("Ocurriò un problema al guardar la info en el archivo")
     # Respuesta al Cliente
-    try:
-        skt_cli.send(str(result).encode('utf-8'))
-        print("Respuesta enviada :)")
-    except:
-        print("Ocurriò un problema al enviar la respuesta :(")
-    skt_cli.close()
+    print("Calcule: ")
+    print(pred)
+    return str(result)
 
 
 def servidor():
@@ -116,9 +110,30 @@ def servidor():
                 direccion[0], direccion[1]))
 
             # Creo hilos para poder atender a varios clientes al mismo tiempo
-            hijos.submit(
-                conexion, skt_cli, direccion[0], direccion[1],
-                all_theta, guardarDatos)
+            # for de 2 imgs
+            recib = skt_cli.recv(243040)
+            recib = recib.decode('utf-8')
+            recibido = recib.split("--", 1)
+            print(recibido[1])
+            hh = []
+            hh.append(hijos.submit(conexion, all_theta, guardarDatos, re.sub("--", "", recibido[0])))
+            hh.append(hijos.submit(conexion, all_theta, guardarDatos, re.sub("-", "", recibido[1])))
+            #as_completed(
+            rta = []
+            for f in concurrent.futures.as_completed(hh):
+                #rta = rta + str(f.result()) + "-"
+                rta.append(f.result())
+            
+            # Respuesta al Cliente
+            print(str(rta))
+            try:
+                skt_cli.send(str(rta).encode('utf-8'))
+                print("Respuesta enviada :)")
+            except:
+                print("Ocurriò un problema al enviar la respuesta :(")
+            skt_cli.close()
+
+            
     except KeyboardInterrupt:
         print("\n Servidor cerrado. Chauu.")
         s.close()

@@ -1,8 +1,6 @@
 import socket
-import threading
 import numpy as np
 import re
-from ast import literal_eval
 from predictOneVsAll import predictOneVsAll
 import concurrent.futures
 import multiprocessing as mp
@@ -65,12 +63,17 @@ def servidor():
         parser.read('serv.conf')
         puerto = int(parser.get('SOCKET_CONF', 'puerto'))
         ipvnro = int(parser.get('SOCKET_CONF', 'ipv'))
+        host=parser.get('SOCKET_CONF', 'host')
         rutaThetas = parser.get('FUNCION_PREDICTORA', 'thetas')
     except:
         print("Ocurriò un problema al leer el archivo de configuracion :(")
         return
     s = None
-    opc, argus = getopt.getopt(sys.argv[1:], 's')
+    try:
+        opc, argus = getopt.getopt(sys.argv[1:], 's')
+    except:
+        print("Argumentos incorrectos :(")
+        return
     guardarDatos = False
     for o, a in opc:
         guardarDatos = True
@@ -85,7 +88,7 @@ def servidor():
         socketFamily=socket.AF_INET6
     else:
         socketFamily=socket.AF_INET
-    for res in socket.getaddrinfo(None, puerto, socketFamily):
+    for res in socket.getaddrinfo(host, puerto, socketFamily):
         af, socktype, proto, canonname, sa = res
         try:
             s = socket.socket(af, socktype, proto)

@@ -11,6 +11,5 @@ def predictOneVsAll(all_theta, X):
     p = np.zeros(m)
     X = np.concatenate([np.ones((m, 1)), X], axis=1)
     p = np.argmax(utils.sigmoid(X.dot(all_theta.T)), axis=1)
-
     return p
 

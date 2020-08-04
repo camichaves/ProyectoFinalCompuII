@@ -10,21 +10,15 @@ from predictOneVsAll import predictOneVsAll
 
 def calcularThetas():
     print("Calculando thetas para predecir nùmeros....")
-    # 20x20 Input Images
+    # 20x20 imagenes de Entrada
     input_layer_size = 400
     # 10 labels
     num_labels = 10
-    #  training data stored in arrays X, y
+    #  traigo las imagenes de MNIST almacenadas
     data = loadmat(os.path.join('Data', 'ex3data1.mat'))
     X, y = data['X'], data['y'].ravel()
     y[y == 10] = 0
     m = y.size
-    theta_t = np.array([-2, -1, 1, 2], dtype=float)
-    X_t = np.concatenate(
-        [np.ones((5, 1)), np.arange(1, 16).reshape(5, 3, order='F')/10.0],
-        axis=1)
-    y_t = np.array([1, 0, 1, 0, 1])
-    lambda_t = 3
     lambda_ = 0.1
     all_theta = oneVsAll(X, y, num_labels, lambda_)
     pred = predictOneVsAll(all_theta, X)
